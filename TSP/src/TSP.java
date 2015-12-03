@@ -1,22 +1,23 @@
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public class TSP {
+
+
+	private static TSP a;
 
 	public TSP() {
 		try {
 
-			File xmlFile = new File("br17.xml");
+			File xmlFile = new File("bayg29.xml"); //bayg29 optimo = 1610 
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 			Document doc = documentBuilder.parse(xmlFile);
@@ -35,26 +36,31 @@ public class TSP {
 
 					Node ejeI = listaEjes.item(columna);
 
-					if (ejeI.getNodeType() == ejeI.ELEMENT_NODE) {
+					if (ejeI.getNodeType() == Node.ELEMENT_NODE) {
 
 						Element student = (Element) ejeI;
+						if (fila == i)  {
+							M.setCasilla(i, i, "0");
+							i++;
+						}
 						M.setCasilla(fila, i, student.getAttribute("cost"));
-						i++;
-
+						i++;		
 					}
 				}
 
 			}
 			M.show();
-			M.caminoMinimo(3);
+
 			System.out.println("Cota superior: " + M.cotaSuperior());
-		} catch (Exception e) {
+						
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
 	public static void main(String[] args) {
-		TSP a = new TSP();
+		a = new TSP();
 	}
 }

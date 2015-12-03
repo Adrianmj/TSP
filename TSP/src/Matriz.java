@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 public class Matriz {
 	double Matrix[][];
 	ArrayList<Integer> listaMinima = new ArrayList<Integer>();
-	ArrayList<Integer> rama = new ArrayList<Integer>();
+
 	public Matriz(int size) {
 		Matrix = new double[size][size];
 	}
@@ -27,6 +25,7 @@ public class Matriz {
 	public double caminoMinimo(int node) {
 		listaMinima.clear();
 		listaMinima.add(node);
+		
 		double costo = 0;
 		while (listaMinima.size() < Matrix.length) {
 			
@@ -36,23 +35,56 @@ public class Matriz {
 			for (int i = 0; i < Matrix.length; i++) {
 				if (Matrix[node][i] <= min & listaMinima.contains(i) == false) {
 					min = Matrix[node][i];
-					bestCase = i;
-					costo =  costo + Matrix[node][i];
+					bestCase = i;	
 				}
 			}
-			
+			costo +=  min;
 			node =  bestCase;
-			
 			listaMinima.add(node);
 		}
+		
+		costo += Matrix[node][listaMinima.get(0)]; //sumamos el coste de vuelta al nodo principal
 		//System.out.println(listaMinima);
 		System.out.println("Coste:"+ costo);
 		return costo;
 	}
 	
+	public double caminoMinimoFijo(ArrayList<Integer> visitados) {
+		listaMinima.clear();
+		listaMinima = visitados;
+		int node = listaMinima.get(listaMinima.size() - 1);
+		double costo = 0;
+		
+		for (int i = 0; i < listaMinima.size() - 1; i++) {
+			costo =  costo + Matrix[listaMinima.get(i)][listaMinima.get(i+1)];
+		}
+
+		while (listaMinima.size() < Matrix.length) {
+			
+			double min = 999999999;
+			int bestCase = 0;
+			
+			for (int i = 0; i < Matrix.length; i++) {
+				if (Matrix[node][i] <= min & listaMinima.contains(i) == false) {
+					min = Matrix[node][i];
+					bestCase = i;
+				}
+			}
+
+			costo +=  min;
+			node =  bestCase;
+
+			listaMinima.add(node);
+		}
+		costo += Matrix[node][listaMinima.get(0)]; //sumamos el coste de vuelta al nodo principal
+		//System.out.println(listaMinima);
+		System.out.println("Coste lista Minima:"+ costo);
+		return costo;
+	}
+	
 	
 	public void arbolMinimo(){
-		rama.add(0);
+
 		
 	}
 	public void show() {
