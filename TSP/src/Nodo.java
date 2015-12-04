@@ -8,11 +8,18 @@ public class Nodo {
 	public Nodo(Nodo padre, int pos){
 		this.setPrevio(padre);
 		this.POSICION = pos;
-		this.visitados = padre.visitados;
-		this.visitados.add(pos);
+		
+		ArrayList<Integer> clone = (ArrayList<Integer>) padre.visitados.clone();
+		this.visitados = clone;
+
 		padre.addHijo(this);
 	}
 	
+	private ArrayList<Integer> extracted(ArrayList<Integer> visitados2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public Nodo(int pos){
 		this.setPrevio(null);
 		this.POSICION = pos;
@@ -33,10 +40,13 @@ public class Nodo {
 	}
 	
 	public void addHijo(Nodo hijo) {
-		ArrayList<Integer> aux;
-		aux = this.visitados;
-		aux.add(hijo.POSICION);
-		
 		hijos.add(hijo);
+	}
+	
+	public void mostrarHijos() {
+		System.out.println("HIJOS: ");
+		for (int i = 0; i < this.hijos.size(); i++) {
+			System.out.print(this.hijos.get(i).POSICION + "_");
+		}
 	}
 }

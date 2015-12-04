@@ -17,7 +17,7 @@ public class TSP {
 	public TSP() {
 		try {
 
-			File xmlFile = new File("bayg29.xml"); //bayg29 optimo = 1610 
+			File xmlFile = new File("burma14.xml"); //bayg29 optimo = 1610 burma14 : 3323
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 			Document doc = documentBuilder.parse(xmlFile);
@@ -49,10 +49,21 @@ public class TSP {
 				}
 
 			}
+			
+			
+			Arbol arbol = new Arbol(M);
+			Nodo nodo = new Nodo(M.mejorNodo()); //partiendo del nodo 0 
+			ArrayList<Nodo> hijos = new ArrayList<Nodo>();
 			M.show();
+			System.out.println("Cota superior: " + M.caminoMinimo(M.mejorNodo()));
+			hijos = arbol.expandirArbol(nodo);
 
-			System.out.println("Cota superior: " + M.cotaSuperior());
-						
+			while (hijos.size() > 0) {
+				hijos.addAll(arbol.expandirArbol(hijos.get(0)));
+				hijos.remove(0);
+			}
+			System.out.println("Termino");	
+			arbol.mostrarMejores();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

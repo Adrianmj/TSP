@@ -2,26 +2,45 @@ import java.util.ArrayList;
 
 public class Matriz {
 	double Matrix[][];
+	int num_nodos;
+	double cota;
 	ArrayList<Integer> listaMinima = new ArrayList<Integer>();
 
 	public Matriz(int size) {
+		num_nodos = size;
 		Matrix = new double[size][size];
+	}
+	
+	public int getNodos() {
+		return num_nodos;
+	}
+	
+	public double getCota() {
+		return cota;
+	}
+	
+	public void setCota(double x) {
+		cota = x;
 	}
 
 	public void setCasilla(int i, int j, String dato) {
 		Matrix[i][j] = Double.parseDouble(dato);
 	}
-	public double cotaSuperior(){
+	
+	public int mejorNodo(){
 		double minimo = 9999999;
 		double aux = 0;
+		int mejorNodo = 0;
 		for (int i = 0; i < Matrix.length; i++) {
 			aux = caminoMinimo(i);
 			if (aux < minimo) {
 				minimo = aux;
+				mejorNodo = i;
 			}
 		}
-		return minimo;
+		return mejorNodo;
 	}
+	
 	public double caminoMinimo(int node) {
 		listaMinima.clear();
 		listaMinima.add(node);
@@ -45,13 +64,13 @@ public class Matriz {
 		
 		costo += Matrix[node][listaMinima.get(0)]; //sumamos el coste de vuelta al nodo principal
 		//System.out.println(listaMinima);
-		System.out.println("Coste:"+ costo);
 		return costo;
 	}
 	
 	public double caminoMinimoFijo(ArrayList<Integer> visitados) {
 		listaMinima.clear();
-		listaMinima = visitados;
+		ArrayList<Integer> clone = (ArrayList<Integer>) visitados.clone();
+		listaMinima = clone;
 		int node = listaMinima.get(listaMinima.size() - 1);
 		double costo = 0;
 		
@@ -78,8 +97,11 @@ public class Matriz {
 		}
 		costo += Matrix[node][listaMinima.get(0)]; //sumamos el coste de vuelta al nodo principal
 		//System.out.println(listaMinima);
-		System.out.println("Coste lista Minima:"+ costo);
 		return costo;
+	}
+
+	private ArrayList<Integer> extracted(ArrayList<Integer> visitados) {
+		return (ArrayList<Integer>) visitados.clone();
 	}
 	
 	
