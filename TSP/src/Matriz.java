@@ -41,6 +41,21 @@ public class Matriz {
 		return mejorNodo;
 	}
 	
+	public int peorNodo(){
+		double minimo = 0;
+		double aux = 0;
+		int peorNodo = 0;
+		for (int i = 0; i < Matrix.length; i++) {
+			aux = caminoMinimo(i);
+			if (aux > minimo) {
+				minimo = aux;
+				peorNodo = i;
+			}
+		}
+
+		return peorNodo;
+	}
+	
 	public double caminoMinimo(int node) {
 		listaMinima.clear();
 		listaMinima.add(node);
@@ -84,7 +99,7 @@ public class Matriz {
 			int bestCase = 0;
 			
 			for (int i = 0; i < Matrix.length; i++) {
-				if (Matrix[node][i] <= min & listaMinima.contains(i) == false) {
+				if (Matrix[node][i] < min & listaMinima.contains(i) == false) {
 					min = Matrix[node][i];
 					bestCase = i;
 				}
@@ -99,11 +114,6 @@ public class Matriz {
 		//System.out.println(listaMinima);
 		return costo;
 	}
-
-	private ArrayList<Integer> extracted(ArrayList<Integer> visitados) {
-		return (ArrayList<Integer>) visitados.clone();
-	}
-	
 	
 	public void arbolMinimo(){
 
